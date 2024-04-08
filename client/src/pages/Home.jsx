@@ -6,24 +6,24 @@ import { ToastContainer, toast } from "react-toastify";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies([]);
+  const [cookies, removeCookie] = useCookies(['token']);
   const [username, setUsername] = useState("");
   useEffect(() => {
     const verifyCookie = async () => {
-      if (!cookies.token) {
+      console.log(cookies);
+      if (!cookies.token.value) {
         navigate("/login");
       }
       const { data } = await axios.post(
         "http://localhost:4000",
         {},
-        { withCredentials: true }
       );
       const { status, user } = data;
       setUsername(user);
       return status
         ? toast(`Hello ${user}`, {
-            position: "top-right",
-          })
+          position: "top-right",
+        })
         : (removeCookie("token"), navigate("/login"));
     };
     verifyCookie();

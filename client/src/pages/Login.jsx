@@ -30,12 +30,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log('we are here');
+      console.log({ inputValue });
       const { data } = await axios.post(
         "http://localhost:4000/login",
         {
           ...inputValue,
         },
-        { withCredentials: true }
       );
       console.log(data);
       const { success, message } = data;
